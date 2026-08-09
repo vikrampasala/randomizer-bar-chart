@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Grades Chart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    #gradeChart {
+      max-width: 100%;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Student Grades Dashboard</h1>
+    
+    <!-- Canvas where the chart will be drawn -->
+    <canvas id="gradeChart"></canvas>
+    
+    <!-- Button to update grades -->
+    <button onclick="updateGrades()">🔄 Randomize Grades</button>
+  </div>
+
+  <!-- 1️⃣  IMPORT LIBRARY FROM CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- 2️⃣  YOUR OWN JAVASCRIPT CODE USING THE LIBRARY -->
+  <script>
+    // Get the canvas element where the chart will go
+    const ctx = document.getElementById('gradeChart').getContext('2d');
+
+    // Create the chart using Chart.js library
+    let myChart = new Chart(ctx, {
+      type: 'bar',  // Type of chart
+      data: {
+        labels: ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve'],  // Student names
+        datasets: [
+          {
+            label: 'Math Grades',
+            data: [85, 92, 78, 95, 88],  // Grades for each student
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',  // Blue color
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2
+          },
+          {
+            label: 'English Grades',
+            data: [90, 88, 92, 87, 91],
+            backgroundColor: 'rgba(75, 192, 75, 0.7)',  // Green color
+            borderColor: 'rgba(75, 192, 75, 1)',
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Math vs English Grades'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+    // Function to update the chart with random grades
+    function updateGrades() {
+      // Generate random grades between 70 and 100
+      const newMathGrades = [
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70)
+      ];
+
+      const newEnglishGrades = [
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70),
+        Math.floor(Math.random() * 30 + 70)
+      ];
+
+      // Update the chart data
+      myChart.data.datasets[0].data = newMathGrades;
+      myChart.data.datasets[1].data = newEnglishGrades;
+      
+      // Refresh the chart to show new data
+      myChart.update();
+    }
+  </script>
+</body>
+</html>
